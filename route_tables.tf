@@ -1,5 +1,5 @@
 resource "aws_route_table" "custom" {
-  vpc_id = aws_vpc.main.id
+  vpc_id = aws_vpc.eks_cluster_vpc.id
 
   tags = {
     Name = "${var.env}-${var.app}-public-table"
@@ -7,7 +7,7 @@ resource "aws_route_table" "custom" {
 }
 
 resource "aws_route_table" "custom_1" {
-  vpc_id = aws_vpc.main.id
+  vpc_id = aws_vpc.eks_cluster_vpc.id
 
   tags = {
     Name = "${var.env}-${var.app}-private-table"
@@ -58,11 +58,11 @@ resource "aws_route_table_association" "pri_sub_3" {
 resource "aws_route" "igw" {
   route_table_id            = aws_route_table.custom.id
   destination_cidr_block    = "0.0.0.0/0"
-  gateway_id                = aws_internet_gateway.main.id
+  gateway_id                = aws_internet_gateway.eks_cluster_vpc.id
 }
 
 resource "aws_route" "nat" {
   route_table_id            = aws_route_table.custom_1.id
   destination_cidr_block    = "0.0.0.0/0"
-  nat_gateway_id            = aws_nat_gateway.main.id
+  nat_gateway_id            = aws_nat_gateway.eks_cluster_vpc.id
 }

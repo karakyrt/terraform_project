@@ -1,4 +1,4 @@
-resource "aws_vpc" "main" {
+resource "aws_vpc" "eks_cluster_vpc" {
   cidr_block = var.vpc_cidr_block
   tags = {
     Name = "${var.env}-${var.app}-vpc"
